@@ -3,14 +3,23 @@
 import java.util.Scanner;
 
 public class Main {
+
+	private static Scanner scanner = new Scanner(System.in);
+
 	public static void main(String[] args) {
 		
+		Admin admin = new Admin("admin1", "1234");
+		CarRental.customers.add(new Customer("customer1", "5678"));
+		CarRental.customers.add(new Customer("customer2", "abcd"));
+		CarRental.availableCars.add(new Car("Civic", "lot"));
+		CarRental.availableCars.add(new Car("Accord", "lot"));
+
 		while (true) {
 			String choice = menu();
 			if (choice.equals("1")) { 
 				loginAsCustomer();
 			} else if (choice.equals("2")) {
-				loginAsAdmin();
+				loginAsAdmin(admin);
 			} else if (choice.equals("0")) {
 				System.out.println("Exiting System...");
 				break;
@@ -32,33 +41,30 @@ public class Main {
 		return scanner.nextLine();
 	}
 	
-	private static void loginAsCustomer() {
-		Customer customer = new Customer("customer1", "5678");
-		
+	private static void loginAsCustomer() {	
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter username:");
 		String userName = scanner.nextLine();
 		System.out.println("Enter PIN:");
 		String PIN = scanner.nextLine();
 		
-		if (customer.login(userName, PIN)) {
-			System.out.println("Customer logged in successfully!");
-			customer.start();  // Or any other customer-specific logic
-		} else {
-			System.out.println("Invalid username or PIN.");
+		for (Customer customer : CarRental.customers) {
+			if (customer.getUserName().equals(userName) && customer.getPIN().equals(PIN)) {
+				System.out.println("Customer logged in successfully!");
+				customer.start();
+				return;
+			}
 		}
 	}
 	
-	
-	private static void loginAsAdmin() {
-		Admin admin = new Admin("admin1", "1234"); // Example username and PIN
+	private static void loginAsAdmin(Admin admin) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter username:");
 		String userName = scanner.nextLine();
 		System.out.println("Enter PIN:");
 		String PIN = scanner.nextLine();
 		
-		if (admin.login(userName, PIN)) {
+		if (admin.getUserName().equals(userName) && admin.getPIN().equals(PIN)){
 			System.out.println("Admin logged in successfully!");
 			admin.start();
 		} else {
@@ -66,28 +72,3 @@ public class Main {
 		}
 	}
 }
-		
-
-/*
-
-		Admin admin = new Admin("admin1", "1234");
-		Customer customer = new Customer("customer1", "5678");
-		
-		if (admin.login("admin1", "1234")) {
-			System.out.println("Admin logged in successfully!");
-			System.out.println(admin.menu());
-			System.out.println(admin.getReport());
-		} else {
-			System.out.println("Admin login failed.");
-		}
-		
-		if (customer.login("customer1", "5678")) {
-			System.out.println("Customer logged in successfully!");
-			System.out.println(customer.menu());
-		} else {
-			System.out.println("Customer login failed.");
-		}
-	}
-}
-
-*/

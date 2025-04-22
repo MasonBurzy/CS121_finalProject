@@ -1,11 +1,13 @@
 /// CarRental ///
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CarRental {
 	private Admin admin;
-	private ArrayList<Customer> customers;
+	public static List<Car> availableCars = new ArrayList<>();
+	public static List<Customer> customers = new ArrayList<>();
 
 	public CarRental() {
 		customers = new ArrayList<>();
