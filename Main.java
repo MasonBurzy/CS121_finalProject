@@ -8,6 +8,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+
 		Admin admin = new Admin("admin1", "1234");
 		CarRental.customers.add(new Customer("customer1", "5678"));
 		CarRental.customers.add(new Customer("customer2", "abcd"));

@@ -39,36 +39,44 @@ public class Customer extends User {
 	}
 
 	public void rentCar() {
-		if (CarRental.availableCars.isEmpty()) {
+		List<Car> availableCars = new ArrayList<>();
+		for (Car car : CarRental.availableCars) {
+			if (car.getCurrentOwner().equals("lot")) {
+				availableCars.add(car);
+			}
+		}
+
+
+		if (availableCars.isEmpty()) {
 			System.out.println("There are no cars available to rent.");
 			return;
 		}
 		
 		System.out.println("Available Cars To Rent:");
-		for (int i = 0; i < CarRental.availableCars.size(); i++) {
-			Car car = CarRental.availableCars.get(i);
-			if (car.getCurrentOwner().equals("lot")) {
-				System.out.println((i + 1) + ") " + car.getCarName());
-			}
+		for (int i = 0; i < availableCars.size(); i++) {
+			System.out.println((i + 1) + ") " + availableCars.get(i).getCarName());
 		}
 
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Enter the name of the car you'd like to rent:");
-		int choice = scanner.nextInt();
+		System.out.println("Enter the number of the car you'd like to rent:");
 		
-		if (choice < 1 || choice > CarRental.availableCars.size()) {
-			System.out.println("Invalid choice. Please try again.");
+		if (!scanner.hasNextInt()) {
+			System.out.println("Invalid input. Please enter a number.");
 			return;
 		}
 		
-		Car selectedCar = CarRental.availableCars.get(choice - 1);
-		if (selectedCar.getCurrentOwner().equals("lot")) {
-			selectedCar.rentCar(this.getUserName());
-			rentedCars.add(selectedCar);
-			System.out.println("You have successfully rented the " + selectedCar.getCarName());
-		} else {
-			System.out.println("This car is not available for rent.");
+		int choice = scanner.nextInt();
+		
+		if (choice < 1 || choice > availableCars.size()) {
+			System.out.println("Invalid choice. Please try again.");
+			return;
 		}
+
+
+		Car selectedCar = availableCars.get(choice - 1);
+		selectedCar.rentCar(this.getUserName());
+		rentedCars.add(selectedCar);
+		System.out.println("You have successfully rented the " + selectedCar.getCarName());
 	}
 
 	public void returnCar() {
@@ -79,10 +87,9 @@ public class Customer extends User {
 
                 boolean foundCar = false;
                 for (Car car : rentedCars) {
-                        if (car.getCarName().equals(carName) && car.getCurrentOwner().equals(this.getUserName())) {
-                                car.returnCar();
+			if (car.getCarName().equals(carName) && car.getCurrentOwner().equals(this.getUserName())) {
+                        	car.returnCar();
 				rentedCars.remove(car);
-				CarRental.availableCars.add(car);
                                 foundCar = true;
                                 break;
                         }

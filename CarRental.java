@@ -1,5 +1,6 @@
 /// CarRental ///
 
+import java.util.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,11 +9,6 @@ public class CarRental {
 	private Admin admin;
 	public static List<Car> availableCars = new ArrayList<>();
 	public static List<Customer> customers = new ArrayList<>();
-
-	public CarRental() {
-		customers = new ArrayList<>();
-		admin = new Admin("adminUser", "adminPassword");
-	}
 
 	public void start() {
 		while (true) {

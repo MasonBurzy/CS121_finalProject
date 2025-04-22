@@ -7,9 +7,14 @@ public class Car implements Serializable {
 	private String carName;
 	private String currentOwner;
 
-	public Car(String carName, String currentOwner) {
+	public Car(String carName) {
 		this.carName = carName;
 		this.currentOwner = "lot";
+	}
+
+	public Car(String carName, String currentOwner) {
+		this.carName = carName;
+		this.currentOwner = currentOwner;
 	}
 
 	public String getCarName() {
