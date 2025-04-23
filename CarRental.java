@@ -92,43 +92,4 @@ public class CarRental {
 			customers = new ArrayList<>();
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*	
-	public static void saveCustomers() {
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("customers.dat"))) {
-			oos.writeObject(customers);
-			System.out.println("Customers saved.");
-		} catch (IOException e) {
-			System.out.println("Error saving customers: " + e.getMessage());
-		}
-	}
-	
-	
-	public static void loadCustomers() {
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("customers.dat"))) {
-			customers = (List<Customer>) ois.readObject();
-			System.out.println("Customers loaded.");
-		} catch (IOException | ClassNotFoundException e) {
-			System.out.println("No saved customers found or error loading.");
-		}
-	}
-*/
 }
