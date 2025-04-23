@@ -1,10 +1,11 @@
 /// Customer ///
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Customer extends User {
+public class Customer extends User implements Serializable {
 	private List<Car> rentedCars;
 
 	public Customer(String userName, String PIN) {
@@ -108,6 +109,8 @@ public class Customer extends User {
 		String newPIN = scanner.nextLine();
 		setPIN(newPIN);
 		System.out.println("PIN changed successfully.");
+	
+		CarRental.saveCustomers();
 	}
 
 	public List<Car> getRentedCars() {

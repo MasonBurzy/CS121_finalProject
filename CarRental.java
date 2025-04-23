@@ -1,16 +1,19 @@
 /// CarRental ///
 
+import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CarRental {
-	private Admin admin;
+	private Admin admin = new Admin("admin1", "1234");
 	public static List<Car> availableCars = new ArrayList<>();
 	public static List<Customer> customers = new ArrayList<>();
 
 	public void start() {
+		loadCustomers();
+
 		while (true) {
 			String choice = menu();
 			if (choice.equals("1")) {
@@ -19,6 +22,7 @@ public class CarRental {
 				loginAsAdmin();
 			} else if (choice.equals("0")) {
 				System.out.println("Exiting System...");
+				saveCustomers();
 				break;
 			} else {
 				System.out.println("Invalid choice, please try again.");
@@ -61,4 +65,70 @@ public class CarRental {
 			System.out.println("Invalid Admin Credentials.");
 		}
 	}
+	
+	
+	
+	public static void saveCustomers() {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("customers.dat"))) {
+			oos.writeObject(customers);
+			System.out.println("Customers saved.");
+			for (Customer customer : customers) {
+				System.out.println("Saved customer: " + customer.getUserName() + ", PIN: " + customer.getPIN());
+			}
+		} catch (IOException e) {
+			System.out.println("Error saving customers: " + e.getMessage());
+		}
+	}
+	
+	public static void loadCustomers() {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("customers.dat"))) {
+			customers = (List<Customer>) ois.readObject();
+			System.out.println("Customers loaded.");
+			for (Customer customer : customers) {
+				System.out.println("Loaded customer: " + customer.getUserName() + ", PIN: " + customer.getPIN());
+			}
+		} catch (IOException | ClassNotFoundException e) {
+			System.out.println("No saved customers found or error loading.");
+			customers = new ArrayList<>();
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*	
+	public static void saveCustomers() {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("customers.dat"))) {
+			oos.writeObject(customers);
+			System.out.println("Customers saved.");
+		} catch (IOException e) {
+			System.out.println("Error saving customers: " + e.getMessage());
+		}
+	}
+	
+	
+	public static void loadCustomers() {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("customers.dat"))) {
+			customers = (List<Customer>) ois.readObject();
+			System.out.println("Customers loaded.");
+		} catch (IOException | ClassNotFoundException e) {
+			System.out.println("No saved customers found or error loading.");
+		}
+	}
+*/
 }
